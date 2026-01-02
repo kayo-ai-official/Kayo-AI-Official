@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayo Admin | Master Control Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-container { padding: 20px; max-width: 800px; margin: auto; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: var(--glass); border: 1px solid var(--primary); padding: 20px; border-radius: 15px; text-align: center; }
+        .user-list { background: rgba(255,255,255,0.05); border-radius: 15px; padding: 15px; }
+        .user-row { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--glass-border); font-size: 12px; }
+        .action-btn { padding: 5px 10px; border-radius: 5px; border: none; font-size: 10px; cursor: pointer; }
+        .btn-block { background: #ff4444; color: white; }
+        .btn-vip { background: var(--primary); color: black; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <header style="text-align: center; margin-bottom: 30px;">
+            <div class="kayo-shield-logo" style="margin: auto;">K</div>
+            <h2 style="color: var(--primary); margin-top: 10px;">MASTER ADMIN PANEL</h2>
+            <p style="font-size: 10px; opacity: 0.7;">Logged in as: hellokayo.official@gmail.com</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>152</h3>
+                <p>Total Users</p>
+            </div>
+            <div class="stat-card">
+                <h3>Active</h3>
+                <p>API Status</p>
+            </div>
+        </div>
+
+        <div class="user-list">
+            <h4 style="margin-bottom: 15px;"><i class="fas fa-users"></i> Manage Users</h4>
+            
+            <div class="user-row">
+                <div>
+                    <strong>User_01</strong><br>
+                    <small>Trial: Day 3/7</small>
+                </div>
+                <div>
+                    <button class="action-btn btn-vip">Make VIP</button>
+                    <button class="action-btn btn-block">Block</button>
+                </div>
+            </div>
+
+            <div class="user-row">
+                <div>
+                    <strong>User_02</strong><br>
+                    <small style="color: var(--primary);">VIP Member</small>
+                </div>
+                <div>
+                    <button class="action-btn" style="background: gray;">Revoke VIP</button>
+                    <button class="action-btn btn-block">Block</button>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="window.location.href='index.html'" class="export-btn" style="width: 100%; margin-top: 30px;">Back to Editor</button>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        // Security check for Admin
+        window.onload = () => {
+            const user = localStorage.getItem('kayo_user'); 
+            // Baad mein hum ise real login se connect karenge
+        };
+    </script>
+</body>
+</html>
