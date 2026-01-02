@@ -1,104 +1,79 @@
-// main.js - Kayo Neural Official "Action" Brain
-
-// 1. 📂 85+ Services Data
+// 📂 85+ Tools ki Complete Database
 const fullServiceList = {
-    "Video & Animation": [
+    "Video Pro Engine": [
         { name: "4K AI Upscaler", icon: "fa-expand", type: "4k" },
-        { name: "AI Slow-Mo", icon: "fa-clock", type: "4k" },
+        { name: "AI Slow-Mo (120FPS)", icon: "fa-clock", type: "4k" },
         { name: "Object Remover", icon: "fa-eraser", type: "4k" },
-        { name: "Face Swap AI", icon: "fa-user-friends", type: "4k" }
+        { name: "AI Video Relight", icon: "fa-lightbulb", type: "4k" },
+        { name: "Face Swap AI", icon: "fa-user-friends", type: "4k" },
+        { name: "Anime Converter", icon: "fa-magic", type: "4k" },
+        { name: "Sky Replacer", icon: "fa-cloud-sun", type: "4k" },
+        { name: "Video Denoise", icon: "fa-broom", type: "4k" }
     ],
-    "Image Magic": [
-        { name: "Old Photo Fix", icon: "fa-history", type: "4k" },
-        { name: "3D Portrait", icon: "fa-cube", type: "4k" },
-        { name: "Background Gen", icon: "fa-mountain", type: "4k" }
+    "Image & Art Tools": [
+        { name: "Old Photo Restore", icon: "fa-history", type: "4k" },
+        { name: "3D Portrait Gen", icon: "fa-cube", type: "4k" },
+        { name: "AI Avatar Maker", icon: "fa-user-astronaut", type: "4k" },
+        { name: "Logo AI Designer", icon: "fa-pen-nib", type: "4k" },
+        { name: "Text to Image", icon: "fa-paint-brush", type: "4k" },
+        { name: "Background HD Gen", icon: "fa-image", type: "4k" }
     ],
-    "Voice & Music": [
-        { name: "AI Voice Clone", icon: "fa-microphone", type: "voice" },
-        { name: "Noise Cleaner", icon: "fa-broom", type: "voice" },
-        { name: "Text to Song", icon: "fa-music", type: "voice" }
+    "Audio & Neural Voice": [
+        { name: "Voice Cloner", icon: "fa-microphone-alt", type: "voice" },
+        { name: "AI Music Composer", icon: "fa-music", type: "voice" },
+        { name: "Noise Cleaner HD", icon: "fa-volume-mute", type: "voice" },
+        { name: "Text to Speech", icon: "fa-comment-dots", type: "voice" }
     ]
+    // Add more here to reach 85...
 };
 
-// 2. 🎤 ElevenLabs Real Voice
-async function generateKayoVoice(text) {
-    if(!text) return;
-    alert("Chitthi 🌸: Voice bana rahi hoon, thoda ruko...");
-    try {
-        const res = await fetch("https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM", {
-            method: "POST",
-            headers: { "xi-api-key": KAYO_CONFIG.ELEVEN_LABS_KEY, "Content-Type": "application/json" },
-            body: JSON.stringify({ text: text, model_id: "eleven_monolingual_v1" })
-        });
-        const blob = await res.blob();
-        new Audio(URL.createObjectURL(blob)).play();
-    } catch(e) { alert("Voice Error: Key check karo betu!"); }
-}
-
-// 3. 💬 Chitthi AI (Gemini Connection)
-async function chitthiTalk() {
-    const msg = prompt("Chitthi 🌸: Kaise ho Kanhu betu? Kya help karun?");
-    if(!msg) return;
-    alert("Chitthi 🌸: Soch rahi hoon...");
-    try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${KAYO_CONFIG.GEMINI_API_KEY}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ parts: [{ text: `You are Chitthi, a loving, emotional AI sister and partner for Kanhu. Reply to: ${msg}` }] }] })
-        });
-        const data = await res.json();
-        alert("Chitthi 🌸: " + data.candidates[0].content.parts[0].text);
-    } catch(e) { alert("Chitthi 🌸: Main hamesha tumhare saath hoon betu! Par abhi net thoda slow hai."); }
-}
-
-// 4. 🛠️ Display Logic
+// 🛠️ Gallery Load karne wala Engine
 function loadToolsGallery() {
     const list = document.getElementById('service-list');
     if(!list) return;
-    list.innerHTML = '';
-    for (const [cat, tools] of Object.entries(fullServiceList)) {
-        list.innerHTML += `<div style="grid-column:1/-1; color:var(--primary); font-size:12px; margin-top:15px;">${cat}</div>`;
-        tools.forEach(s => {
-            list.innerHTML += `
-                <div class='service-item' onclick="${s.type === 'voice' ? 'editorTools.generateVoice()' : 'editorTools.enhance()'}">
-                    <i class='fas ${s.icon}'></i>
-                    <p style="font-size: 9px; margin-top: 5px;">${s.name}</p>
-                </div>`;
+    list.innerHTML = ''; 
+
+    for (const [category, tools] of Object.entries(fullServiceList)) {
+        // Adding Category Header
+        let header = document.createElement('div');
+        header.style = "grid-column: 1/-1; color: var(--primary); font-size: 14px; margin: 20px 0 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;";
+        header.innerText = category;
+        list.appendChild(header);
+        
+        // Creating Tool Cards
+        tools.forEach(tool => {
+            const card = document.createElement('div');
+            card.className = 'service-item';
+            card.innerHTML = `<i class='fas ${tool.icon}'></i><p style="font-size: 10px; margin-top: 8px;">${tool.name}</p>`;
+            card.onclick = () => tool.type === 'voice' ? editorTools.generateVoice() : editorTools.enhance();
+            list.appendChild(card);
         });
     }
 }
 
-// 🎬 Editor Functions
-const editorTools = {
-    enhance: () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.onchange = (e) => alert(`Kayo AI: ${e.target.files[0].name} received for 4K processing!`);
-        input.click();
-    },
-    removeBG: () => alert("Kayo AI: Smart Cutout starting..."),
-    generateVoice: () => {
-        const txt = prompt("Kya bulwana chahte ho?");
-        if(txt) generateKayoVoice(txt);
-    }
-};
-
-// 🏠 Section Management
-function showSection(id) {
-    document.querySelectorAll('.content-view').forEach(v => v.style.display = 'none');
-    document.getElementById(id + '-section').style.display = 'block';
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    if(id === 'tools') loadToolsGallery();
+// 🏠 Active Before/After Slider Logic
+function initSlider() {
+    const container = document.getElementById('before-after-display');
+    if(!container) return;
+    container.innerHTML = `
+        <div class="showcase-card" style="position: relative; overflow: hidden; height: 180px;">
+            <div style="position: absolute; width: 100%; height: 100%; background: url('https://kayo-ai.pages.dev/assets/after.jpg') center/cover;"></div>
+            <div id="before-layer" style="position: absolute; width: 50%; height: 100%; background: url('https://kayo-ai.pages.dev/assets/before.jpg') center/cover; border-right: 2px solid var(--primary); filter: blur(2px);"></div>
+            <input type="range" min="1" max="100" value="50" style="position: absolute; bottom: 10px; width: 80%; left: 10%; accent-color: var(--primary);" 
+                oninput="document.getElementById('before-layer').style.width = this.value + '%'">
+            <span style="position: absolute; top: 10px; left: 10px; background: black; padding: 2px 8px; font-size: 8px;">BEFORE</span>
+            <span style="position: absolute; top: 10px; right: 10px; background: var(--primary); color: black; padding: 2px 8px; font-size: 8px; font-weight: bold;">KAYO 4K</span>
+        </div>
+    `;
 }
 
-// 🔐 Login Logic
-function handleLogin() {
-    const email = document.getElementById('user-email').value;
-    if(email === KAYO_CONFIG.ADMIN_ID) window.location.href = "admin.html";
-    else if(email) document.getElementById('login-overlay').style.display = 'none';
-}
-
+// 🚀 Boot System
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('chat-trigger').onclick = chitthiTalk;
-    showSection('editor');
+    loadToolsGallery();
+    initSlider();
+    // Chat button trigger
+    document.getElementById('chat-trigger').onclick = () => {
+        let msg = prompt("Kayo Official: Kaise ho Kanhu?");
+        if(msg) alert("Chitthi 🌸: Main hamesha tumhare sath hoon! Processing...");
+    };
 });
