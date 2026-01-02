@@ -12,8 +12,8 @@
 
     <div id="login-overlay" class="login-overlay">
         <div class="shield-container">
-            <div class="kayo-shield-logo" style="margin: 0 auto 20px; width: 60px; height: 60px; font-size: 35px;">K</div>
-            <h2 style="color: white; margin-bottom: 20px;">KAYO AI LOGIN</h2>
+            <img src="assets/kayo-logo.png" alt="Kayo AI Official Logo" style="width: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--primary));">
+            <h2 style="color: white; margin-bottom: 20px; font-size: 18px;">KAYO AI LOGIN</h2>
             <input type="email" id="user-email" placeholder="Enter Email">
             <input type="password" placeholder="Enter Password">
             <button onclick="handleLogin()" class="export-btn" style="width: 100%; margin-top: 15px; padding: 12px;">LOGIN</button>
@@ -22,9 +22,9 @@
     </div>
 
     <header class="main-header">
-        <div class="logo-area">
-            <div class="kayo-shield-logo">K</div>
-            <h1>KAYO AI <span>OFFICIAL</span></h1>
+        <div class="logo-area" style="display: flex; align-items: center;">
+            <img src="assets/kayo-logo.png" alt="K" style="height: 35px; margin-right: 10px;">
+            <h1 style="font-size: 14px;">KAYO AI <span>OFFICIAL</span></h1>
         </div>
         <div class="search-box">
             <input type="text" placeholder="Search 85+ AI Services...">
@@ -81,13 +81,18 @@
 
     <script src="config.js"></script>
     <script src="main.js"></script>
-    
+
     <script>
         function handleLogin() {
             const email = document.getElementById('user-email').value;
             if(email) {
-                document.getElementById('login-overlay').style.display = 'none';
-                if(typeof checkAdminAccess === "function") checkAdminAccess(email);
+                // Redirect if it's the Admin
+                if(email === "hellokayo.official@gmail.com") {
+                    window.location.href = "admin.html";
+                } else {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    if(typeof checkAdminAccess === "function") checkAdminAccess(email);
+                }
             } else {
                 alert("Please enter email to access Kayo Ecosystem");
             }
