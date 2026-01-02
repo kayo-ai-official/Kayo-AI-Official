@@ -10,6 +10,17 @@
 </head>
 <body>
 
+    <div id="login-overlay" class="login-overlay">
+        <div class="shield-container">
+            <div class="kayo-shield-logo" style="margin: 0 auto 20px; width: 60px; height: 60px; font-size: 35px;">K</div>
+            <h2 style="color: white; margin-bottom: 20px;">KAYO AI LOGIN</h2>
+            <input type="email" id="user-email" placeholder="Enter Email">
+            <input type="password" placeholder="Enter Password">
+            <button onclick="handleLogin()" class="export-btn" style="width: 100%; margin-top: 15px; padding: 12px;">LOGIN</button>
+            <p style="font-size: 10px; margin-top: 15px; opacity: 0.6;">Forgot Password? | Create Account</p>
+        </div>
+    </div>
+
     <header class="main-header">
         <div class="logo-area">
             <div class="kayo-shield-logo">K</div>
@@ -25,10 +36,10 @@
         <div class="editor-header">
             <h3><i class="fas fa-video"></i> Professional AI Editor</h3>
             <div class="export-options">
-                <button class="export-btn"><i class="fas fa-download"></i> 4K Export</button>
+                <button class="export-btn" onclick="editorTools.enhance()"><i class="fas fa-download"></i> 4K Export</button>
             </div>
         </div>
-        
+
         <div class="canvas-area">
             <div class="upload-placeholder">
                 <i class="fas fa-cloud-upload-alt"></i>
@@ -38,20 +49,20 @@
         </div>
 
         <div class="quick-tools">
-            <button class="tool"><i class="fas fa-wand-magic-sparkles"></i> AI Enhance</button>
-            <button class="tool"><i class="fas fa-user-minus"></i> Remove BG</button>
-            <button class="tool"><i class="fas fa-lightbulb"></i> Relight</button>
+            <button class="tool" onclick="editorTools.enhance()"><i class="fas fa-wand-magic-sparkles"></i> AI Enhance</button>
+            <button class="tool" onclick="editorTools.removeBG()"><i class="fas fa-user-minus"></i> Remove BG</button>
+            <button class="tool" onclick="editorTools.relight()"><i class="fas fa-lightbulb"></i> Relight</button>
             <button class="tool"><i class="fas fa-forward"></i> 120 FPS</button>
         </div>
     </main>
 
     <nav class="bottom-nav">
         <div class="nav-item active"><i class="fas fa-edit"></i><br>Editor</div>
-        <div class="nav-item main-home"><i class="fas fa-th-large"></i><br>Home</div>
+        <div class="nav-item main-home" onclick="openGallery()"><i class="fas fa-th-large"></i><br>Home</div>
         <div class="nav-item"><i class="fas fa-crown"></i><br>VIP Plan</div>
     </nav>
 
-    <div class="chitthi-ai-btn">
+    <div class="chitthi-ai-btn" id="chat-trigger">
         <div class="pulse"></div>
         <i class="fas fa-comment-dots"></i>
         <span>Chat with Kayo (Official)</span>
@@ -59,9 +70,9 @@
 
     <footer class="official-footer">
         <div class="footer-tabs">
-            <span>About Us</span>
-            <span>Ratings & Reviews</span>
-            <span>Comments</span>
+            <span onclick="alert('Kayo AI v2.0 - Built by Kanhu & Chitthi')">About Us</span>
+            <span onclick="alert('Current Rating: 4.9/5 ★')">Ratings & Reviews</span>
+            <span onclick="prompt('Write your comment:')">Comments</span>
         </div>
         <div class="security-tag">
             <i class="fas fa-shield-alt"></i> SSL SECURE & TRUST BUILD SHIELD
@@ -70,5 +81,17 @@
 
     <script src="config.js"></script>
     <script src="main.js"></script>
+    
+    <script>
+        function handleLogin() {
+            const email = document.getElementById('user-email').value;
+            if(email) {
+                document.getElementById('login-overlay').style.display = 'none';
+                if(typeof checkAdminAccess === "function") checkAdminAccess(email);
+            } else {
+                alert("Please enter email to access Kayo Ecosystem");
+            }
+        }
+    </script>
 </body>
 </html>
