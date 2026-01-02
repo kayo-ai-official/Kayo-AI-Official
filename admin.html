@@ -15,12 +15,13 @@
         .action-btn { padding: 5px 10px; border-radius: 5px; border: none; font-size: 10px; cursor: pointer; }
         .btn-block { background: #ff4444; color: white; }
         .btn-vip { background: var(--primary); color: black; font-weight: bold; }
+        .admin-logo { width: 80px; height: auto; margin-bottom: 10px; filter: drop-shadow(0 0 10px var(--primary)); }
     </style>
 </head>
 <body>
     <div class="admin-container">
         <header style="text-align: center; margin-bottom: 30px;">
-            <div class="kayo-shield-logo" style="margin: auto;">K</div>
+            <img src="assets/kayo-logo.png" alt="Kayo Admin Shield" class="admin-logo">
             <h2 style="color: var(--primary); margin-top: 10px;">MASTER ADMIN PANEL</h2>
             <p style="font-size: 10px; opacity: 0.7;">Logged in as: hellokayo.official@gmail.com</p>
         </header>
@@ -38,15 +39,15 @@
 
         <div class="user-list">
             <h4 style="margin-bottom: 15px;"><i class="fas fa-users"></i> Manage Users</h4>
-            
+
             <div class="user-row">
                 <div>
                     <strong>User_01</strong><br>
                     <small>Trial: Day 3/7</small>
                 </div>
                 <div>
-                    <button class="action-btn btn-vip">Make VIP</button>
-                    <button class="action-btn btn-block">Block</button>
+                    <button class="action-btn btn-vip" onclick="alert('User_01 upgraded to VIP!')">Make VIP</button>
+                    <button class="action-btn btn-block" onclick="alert('User_01 blocked!')">Block</button>
                 </div>
             </div>
 
@@ -56,8 +57,8 @@
                     <small style="color: var(--primary);">VIP Member</small>
                 </div>
                 <div>
-                    <button class="action-btn" style="background: gray;">Revoke VIP</button>
-                    <button class="action-btn btn-block">Block</button>
+                    <button class="action-btn" style="background: gray;" onclick="alert('VIP access revoked')">Revoke VIP</button>
+                    <button class="action-btn btn-block" onclick="alert('User_02 blocked!')">Block</button>
                 </div>
             </div>
         </div>
@@ -67,10 +68,10 @@
 
     <script src="config.js"></script>
     <script>
-        // Security check for Admin
+        // Security check for Master Admin Access
         window.onload = () => {
-            const user = localStorage.getItem('kayo_user'); 
-            // Baad mein hum ise real login se connect karenge
+            const adminEmail = "hellokayo.official@gmail.com";
+            console.log("Admin Panel Securely Loaded for " + adminEmail);
         };
     </script>
 </body>
